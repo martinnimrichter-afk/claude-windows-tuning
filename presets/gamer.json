@@ -1,0 +1,15 @@
+{
+  "name": "gamer",
+  "description": "For machines used primarily for gaming. Same F2 safe tweaks as office (none of them touch Game Bar / Xbox / Game Pass services). v0.2 aggressive will add Gamer-specific exclusions on AppX.",
+  "tested_builds": ["22631", "26100", "26200"],
+  "tweaks": [
+    "telemetry-required",
+    "ui-widgets-off",
+    "ui-start-suggestions-off",
+    "ui-lock-screen-tips-off",
+    "search-highlights-off",
+    "edge-promotional-off",
+    "onedrive-scoobe-off",
+    "notifications-news-off"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "creator",
+  "description": "For content creators (Adobe, Affinity, DaVinci, Substance). Excludes onedrive-scoobe-off (OneDrive often used for asset sync — Creator may want first-run nag) and edge-promotional-off (Edge promo tweaks are policy-level which some Adobe asset sites trip over).",
+  "tested_builds": ["22631", "26100", "26200"],
+  "tweaks": [
+    "telemetry-required",
+    "ui-widgets-off",
+    "ui-start-suggestions-off",
+    "ui-lock-screen-tips-off",
+    "search-highlights-off",
+    "notifications-news-off"
+  ]
+}

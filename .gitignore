@@ -1,0 +1,23 @@
+# Per-run state — never commit
+runs/
+
+# Editor / OS noise
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+desktop.ini
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# PowerShell module state
+*.psd1.bak
+
+# Local development overrides
+.env
+.env.local
+local.config.json

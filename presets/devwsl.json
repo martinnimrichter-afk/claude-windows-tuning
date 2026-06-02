@@ -1,0 +1,15 @@
+{
+  "name": "devwsl",
+  "description": "For development machines using WSL, Docker, Hyper-V, or Git heavily. Same F2 safe tweaks as office (none touch Hyper-V / WSL / Containers). v0.2 aggressive will add DevWSL-specific exclusions.",
+  "tested_builds": ["22631", "26100", "26200"],
+  "tweaks": [
+    "telemetry-required",
+    "ui-widgets-off",
+    "ui-start-suggestions-off",
+    "ui-lock-screen-tips-off",
+    "search-highlights-off",
+    "edge-promotional-off",
+    "onedrive-scoobe-off",
+    "notifications-news-off"
+  ]
+}

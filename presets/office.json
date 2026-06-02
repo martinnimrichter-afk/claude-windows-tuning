@@ -1,0 +1,15 @@
+{
+  "name": "office",
+  "description": "Default fallback. Safe reversible tweaks for office/general use. Includes all F2 UI/privacy/Edge/notifications tweaks.",
+  "tested_builds": ["22631", "26100", "26200"],
+  "tweaks": [
+    "telemetry-required",
+    "ui-widgets-off",
+    "ui-start-suggestions-off",
+    "ui-lock-screen-tips-off",
+    "search-highlights-off",
+    "edge-promotional-off",
+    "onedrive-scoobe-off",
+    "notifications-news-off"
+  ]
+}
