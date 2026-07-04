@@ -21,3 +21,7 @@ desktop.ini
 .env
 .env.local
 local.config.json
+
+# Nix build outputs
+result
+result-*

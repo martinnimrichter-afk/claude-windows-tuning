@@ -1,0 +1,38 @@
+# mainctl — thin control CLI for mAIn OS Phase 0.
+# Wraps the microvm.nix runner; grows into the real control plane later (VISION §3.8).
+# NOTE: sourced as text into a writeShellApplication (set -euo pipefail already applied).
+
+FLAKE="${MAINOS_FLAKE:-.}"
+cmd="${1:-help}"
+
+case "$cmd" in
+  build)
+    echo "==> building mAIn OS microVM runner"
+    exec nix build "${FLAKE}#mainos-runner" "${@:2}"
+    ;;
+  run)
+    echo "==> booting mAIn OS as a Firecracker microVM (needs /dev/kvm)"
+    exec nix run "${FLAKE}#mainos" -- "${@:2}"
+    ;;
+  info)
+    echo "mAIn OS — Phase 0 (headless Firecracker microVM)"
+    echo "flake      : ${FLAKE}"
+    echo "system     : nixosConfigurations.mainos"
+    echo "runner     : ${FLAKE}#mainos-runner"
+    echo
+    echo "commands:"
+    echo "  mainctl build   build the microVM runner"
+    echo "  mainctl run     boot the microVM (requires /dev/kvm)"
+    echo "  mainctl info    show this"
+    echo
+    echo "dev build (serial login, root pw 'mainos'):"
+    echo "  add  mainos.dev = true;  to nix/mainos.nix, then  mainctl run"
+    ;;
+  help | -h | --help)
+    exec "$0" info
+    ;;
+  *)
+    echo "mainctl: unknown command '$cmd' (try: mainctl info)" >&2
+    exit 2
+    ;;
+esac
