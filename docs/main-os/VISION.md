@@ -197,6 +197,54 @@ traces reasoningu, tool-callů, nákladů, ne bolt-on logy.
 
 ---
 
+## 8b. Rozhodnuto (2026-07-04)
+
+- **Rozsah:** úzký stack, jedna smyčka. Nejdřív *jen headless OS základ* — spodní
+  vrstvy 1–2 (host substrát + izolace). Agent kernel a výš přijdou později.
+- **Cílovka:** zatím žádná konkrétní; cíl je funkční **headless (unix) OS image**.
+- **Model:** **self-hosted OS image** — stáhneš a provozuješ, plná kontrola.
+
+→ Ostatní vrstvy (rozpočty, paměť, tool bus, governance) zůstávají ve vizi, ale
+mimo aktuální scope. Stavíme podlahu, ne celý dům.
+
+---
+
+## 8c. Phase 0 spec — headless OS image
+
+**Cíl:** minimální, immutable, headless Linux, který nabootuje jako Firecracker
+guest (a na baremetalu/VM), nemá nic navíc a je připravený hostit agent cell.
+
+**Co je uvnitř:**
+- Minimální kernel (jen KVM guest ovladače, virtio, sítě) — žádné zbytečné moduly.
+- init (tini/openrc/systemd-minimal) + jediná systémová služba: **agent supervisor stub**.
+- Read-only rootfs, writable jen `tmpfs` + jeden data volume.
+- Statická síť (virtio-net), SSH volitelně jen v dev buildu.
+- MCP tool proxy stub (placeholder pro pozdější tool bus).
+
+**Co je venku (záměrně):**
+- Žádný desktop/GUI, žádný X, žádný audio.
+- V produkčním buildu žádný shell ani balíčkovač (dev build je mít smí).
+- Žádné multi-user věci, žádný cron pro lidi, žádné login manaery.
+
+**Kandidáti na base (rozcestí #4 — čím image stavíme):**
+
+| Přístup | Plus | Minus |
+|---|---|---|
+| **NixOS (flake)** | deklarativní, reprodukovatelné, atomické rollbacky — ideál pro immutable OS | strmější křivka, větší build |
+| **Buildroot** | nejmenší rootfs, plná kontrola | ruční, pomalá iterace |
+| **bootc / Fedora** | OCI-native immutable, atomické updaty | těžší než agent potřebuje |
+| **Alpine + mkinitfs** | malé, známé, rychlé | méně „immutable by design" |
+
+*Doporučení: **NixOS flake** — sedí na princip „immutable & reprodukovatelné",
+build je jeden `nix build`, iterace deklarativní. Buildroot jako fallback, když
+chceme opravdu minimální rootfs.*
+
+**Deliverable Phase 0:** `nix build .#mainos-image` → bootovatelný headless image
++ `mainctl run <cell>` skript, který ho spustí ve Firecrackeru a ukáže život
+supervisor stubu.
+
+---
+
 ## 9. MVP roadmap
 
 - **Fáze 0 — „jeden agent, bezpečně a viditelně":**
